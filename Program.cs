@@ -42,6 +42,7 @@ public class Program
             // Affichage de la liste des tokens
             DisplayTokens(parseTree);
         }
+        TokenParser
     }
 
     public static void DisplayTokens(ParseTree parseTree)
