@@ -27,6 +27,12 @@ public class Program
 
         // Analyse du code source
         var parseTree = parser.Parse(source);
+        var tokenParser = new TokenParser(parseTree.Tokens);
+        var astRoot = TokenParser.Parse();
+
+// Parcourir et afficher l'AST
+        ProcessAst(astRoot);
+
 
         // Vérification des erreurs d'analyse
         if (parseTree.HasErrors())
@@ -43,6 +49,31 @@ public class Program
             DisplayTokens(parseTree);
         }
         TokenParser
+    }
+    public static void ProcessAst(AstNode node, string indent = "")
+    {
+        switch (node)
+        {
+            case IdentNode identNode:
+                Console.WriteLine($"{indent}Ident : {identNode.Name}");
+                break;
+
+            case EntierNode entierNode:
+                Console.WriteLine($"{indent}Entier : {entierNode.Value}");
+                break;
+
+            case ListeNode listeNode:
+                Console.WriteLine($"{indent}Liste :");
+                foreach (var element in listeNode.Elements)
+                {
+                    ProcessAst(element, indent + "  ");
+                }
+                break;
+
+            default:
+                Console.WriteLine($"{indent}Nœud inconnu");
+                break;
+        }
     }
 
     public static void DisplayTokens(ParseTree parseTree)
